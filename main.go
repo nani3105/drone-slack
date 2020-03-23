@@ -181,6 +181,31 @@ func main() {
 			Usage:  "job started",
 			EnvVar: "DRONE_JOB_STARTED",
 		},
+		cli.StringFlag{
+			Name:   "upstream.repo.name",
+			Usage:  "upstream repo name",
+			EnvVar: "UPSTREAM_REPO_NAME",
+		},
+		cli.StringFlag{
+			Name:   "upstream.build.number",
+			Usage:  "upstream build number",
+			EnvVar: "UPSTREAM_BUILD_NUMBER",
+		},
+		cli.StringFlag{
+			Name:   "upstream.author.name",
+			Usage:  "upstream commit owner",
+			EnvVar: "UPSTREAM_AUTHOR_NAME",
+		},
+		cli.StringFlag{
+			Name:   "upstream.build.link",
+			Usage:  "upstream build link",
+			EnvVar: "UPSTREAM_BUILD_LINK",
+		},
+		cli.StringFlag{
+			Name:   "is_upstream_triggered_build",
+			Usage:  "is build triggered by upstream",
+			EnvVar: "IS_UPSTREAM_TRIGGERED_BUILD",
+		},
 	}
 
 	if _, err := os.Stat("/run/drone/env"); err == nil {
@@ -234,6 +259,13 @@ func run(c *cli.Context) error {
 			IconEmoji: c.String("icon.emoji"),
 			Color:     c.String("color"),
 			LinkNames: c.Bool("link-names"),
+		},
+		Upstream: Upstream{
+			Number:          c.Int("upstream.build.number"),
+			Repo:            c.String("upstream.repo.name"),
+			Link:            c.String("upstream.build.link"),
+			Username:        c.String("upstream.author.name"),
+			IsUpstreamBuild: c.Bool("is_upstream_triggered_build"),
 		},
 	}
 

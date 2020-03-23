@@ -58,15 +58,24 @@ type (
 		LinkNames bool
 	}
 
+	Upstream struct {
+		Number          int
+		Repo			string
+		Link            string
+		Username        string
+		IsUpstreamBuild bool
+	}
+
 	Job struct {
 		Started int64
 	}
 
 	Plugin struct {
-		Repo   Repo
-		Build  Build
-		Config Config
-		Job    Job
+		Repo     Repo
+		Build    Build
+		Config   Config
+		Job      Job
+		Upstream Upstream
 	}
 )
 

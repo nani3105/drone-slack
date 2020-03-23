@@ -76,7 +76,12 @@ Initial commit
 
 Message body
 Initial commit
-Message body`
+Message body
+10
+foo
+http://github.com/octocat/hello-world@upstream
+Upstream octocat
+foobaz`
 
 	assert.Equal(t, expectedMessage, msg)
 }
@@ -96,9 +101,20 @@ success`
 
 func getTestPlugin() Plugin {
 	return Plugin{
-		Repo:   getTestRepo(),
-		Build:  getTestBuild(),
-		Config: getTestConfig(),
+		Repo:     getTestRepo(),
+		Build:    getTestBuild(),
+		Config:   getTestConfig(),
+		Upstream: getTestUpstream(),
+	}
+}
+
+func getTestUpstream() Upstream {
+	return Upstream{
+		Number:          10,
+		Repo:            "foo",
+		Link:            "http://github.com/octocat/hello-world@upstream",
+		Username:        "Upstream octocat",
+		IsUpstreamBuild: true,
 	}
 }
 
@@ -139,7 +155,13 @@ func getTestConfig() Config {
 	t := `Message Template:
 {{build.message}}
 {{build.message.title}}
-{{build.message.body}}`
+{{build.message.body}}
+{{upstream.number}}
+{{upstream.repo}}
+{{upstream.link}}
+{{upstream.username}}
+{{upstream.isUpstreamBuild}}
+{{#if upstream.isUpstreamBuild}}foobaz{{/if}}`
 
 	tf := `Message Template Fallback:
 {{build.message.title}}
